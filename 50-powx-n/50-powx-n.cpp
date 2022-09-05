@@ -11,6 +11,7 @@ public:
             n = -n;
             x = 1/x;
         }
-        return (n%2 == 0) ? p(x*x, n/2) : x*p(x*x, n/2);
+        double d = p(x*x, n/2);
+        return (n%2 == 0) ? d : x*d;
     }
 };
