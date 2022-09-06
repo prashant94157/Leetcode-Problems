@@ -1,45 +1,21 @@
 class Solution {
 public:
-    int scoreOfParentheses(string str) {
-        stack<int> s;
-        for(auto a:str)
+    int scoreOfParentheses(string s) {
+        int score = 0, balance = 0, n = s.size() ;
+        for(int i=0;i<n;i++)
         {
+            char a = s[i];
             if(a=='(')
             {
-                s.push(-1);
+                balance++;
             }
             else
             {
-                if(s.top() == -1)
-                {
-                    s.pop();
-                    if(s.size()==0 || s.top()==-1)
-                    s.push(1);
-                    else
-                    {
-                        int temp = s.top();
-                        s.pop();
-                        temp++;
-                        s.push(temp);
-                    }
-                }
-                else
-                {
-                    int t = s.top();
-                    s.pop();
-                    s.pop();
-                    if(s.size()==0 || s.top()==-1)
-                    s.push(2*t);
-                    else
-                    {
-                        int temp = s.top() + 2*t;
-                        s.pop();
-                        s.push(temp);
-                    }
-                }
+                balance--;
+                if(s[i-1]=='(')
+                score += 1<<balance;
             }
-            cout<<s.top()<<" "<<s.size()<<endl;
         }
-        return s.top();
+        return score;
     }
 };
