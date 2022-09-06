@@ -1,47 +1,45 @@
 class Solution {
 public:
     int scoreOfParentheses(string str) {
-        stack<string> s;
+        stack<int> s;
         for(auto a:str)
         {
             if(a=='(')
             {
-                string temp;
-                temp = a;
-                s.push(temp);
+                s.push(-1);
             }
             else
             {
-                if(s.top() == "(")
+                if(s.top() == -1)
                 {
                     s.pop();
-                    if(s.size()==0 || s.top()=="(")
-                    s.push("1");
+                    if(s.size()==0 || s.top()==-1)
+                    s.push(1);
                     else
                     {
-                        int temp = stoi(s.top());
+                        int temp = s.top();
                         s.pop();
                         temp++;
-                        s.push(to_string(temp));
+                        s.push(temp);
                     }
                 }
                 else
                 {
-                    int t = stoi(s.top());
+                    int t = s.top();
                     s.pop();
                     s.pop();
-                    if(s.size()==0 || s.top()=="(")
-                    s.push(to_string(2*t));
+                    if(s.size()==0 || s.top()==-1)
+                    s.push(2*t);
                     else
                     {
-                        int temp = stoi(s.top()) + 2*t;
+                        int temp = s.top() + 2*t;
                         s.pop();
-                        s.push(to_string(temp));
+                        s.push(temp);
                     }
                 }
             }
             cout<<s.top()<<" "<<s.size()<<endl;
         }
-        return stoi(s.top());
+        return s.top();
     }
 };
