@@ -30,13 +30,12 @@ public:
         reverse(temp.begin(), temp.end());
         vector<int> left = great(temp), right = great(heights);
         reverse(left.begin(), left.end());
-        for(int i=0;i<n;i++)
+        for(int i=1;i<n-1;i++)
         {
             int m = min(left[i], right[i]);
-            if(m !=-1)
-            {
-                res += m - heights[i];
-            }
+           
+            res += m - heights[i];
+            
             // cout<<right[i]<<" ";
         }
         return res;
