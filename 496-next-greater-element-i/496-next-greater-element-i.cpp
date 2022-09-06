@@ -8,10 +8,8 @@ public:
         {
             while(s.size() && s.top()<=nums2[i])
                 s.pop();
-            if(s.size()==0)
-                ngtr[nums2[i]] = -1;
-            else
-                ngtr[nums2[i]] = s.top();
+            
+            ngtr[nums2[i]] = s.size() ? s.top() : -1;
             
             s.push(nums2[i]);
         }
