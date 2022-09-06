@@ -6,21 +6,13 @@ public:
         stack<int> s;
         for(int i=n-1;i>=0;i--)
         {
+            while(s.size() && s.top()<=nums2[i])
+                s.pop();
             if(s.size()==0)
                 ngtr[nums2[i]] = -1;
-            else if(s.top() > nums2[i])
-            {
-                ngtr[nums2[i]] = s.top();
-            }
             else
-            {
-                while(s.size() && s.top()<=nums2[i])
-                    s.pop();
-                if(s.size()==0)
-                    ngtr[nums2[i]] = -1;
-                else
-                    ngtr[nums2[i]] = s.top();
-            }
+                ngtr[nums2[i]] = s.top();
+            
             s.push(nums2[i]);
         }
         vector<int> res(nums1.size());
