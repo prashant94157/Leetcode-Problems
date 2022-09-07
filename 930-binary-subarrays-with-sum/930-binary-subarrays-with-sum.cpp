@@ -1,7 +1,7 @@
 class Solution {
 public:
     int numSubarraysWithSum(vector<int>& A, int S) {
-        unordered_map<int, int> c;
+        map<int, int> c;
         c[0] = 1;
         int psum = 0, res = 0;
         for (int i : A) {
