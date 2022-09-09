@@ -17,12 +17,29 @@ public:
         return res;
     }
 private:
+    // void preorder(TreeNode* root, vector<int> &res)
+    // {
+    //     if(root==NULL)
+    //         return;
+    //     res.push_back(root->val);
+    //     preorder(root->left, res);
+    //     preorder(root->right,res);
+    // }
     void preorder(TreeNode* root, vector<int> &res)
     {
         if(root==NULL)
             return;
-        res.push_back(root->val);
-        preorder(root->left, res);
-        preorder(root->right,res);
+        stack<TreeNode*> st;
+        st.push(root);
+        while(!st.empty())
+        {
+            root = st.top();
+            st.pop();
+            res.push_back(root->val);
+            if(root->right)
+                st.push(root->right);
+            if(root->left)
+                st.push(root->left);
+        }
     }
 };
