@@ -51,36 +51,76 @@ public:
     
     
     
-    int n;
-    vector<int> postorderTraversal(TreeNode* root) {
+//     int n;
+//     vector<int> postorderTraversal(TreeNode* root) {
         
-        n= size(root);
-        vector<int> res(n);
+//         n= size(root);
+//         vector<int> res(n);
+//         postorder(root,res);
+//         return res;
+//     }
+//     int size(TreeNode *root)
+//     {
+//         if(root==NULL)
+//             return 0;
+//         return 1 + size(root->left) + size(root->right);
+//     }
+//     void postorder(TreeNode *root,vector<int> &res)
+//     {
+//         if(root==NULL)
+//             return;
+//         stack<TreeNode*> st1;
+//         st1.push(root);
+//         while(!st1.empty())
+//         {
+//             root = st1.top();
+//             st1.pop();
+//             res[--n] = root->val;
+//             if(root->left)
+//                 st1.push(root->left);
+//             if(root->right)
+//                 st1.push(root->right);
+            
+//         }
+//     }
+    
+    
+    vector<int> postorderTraversal(TreeNode* root) {
+        vector<int> res;
         postorder(root,res);
         return res;
     }
-    int size(TreeNode *root)
-    {
-        if(root==NULL)
-            return 0;
-        return 1 + size(root->left) + size(root->right);
-    }
-    void postorder(TreeNode *root,vector<int> &res)
+    void postorder(TreeNode* root, vector<int> &res)
     {
         if(root==NULL)
             return;
-        stack<TreeNode*> st1;
-        st1.push(root);
-        while(!st1.empty())
+        TreeNode *previous = NULL, *curr = root;
+        stack<TreeNode*> st;
+        while(curr || !st.empty())
         {
-            root = st1.top();
-            st1.pop();
-            res[--n] = root->val;
-            if(root->left)
-                st1.push(root->left);
-            if(root->right)
-                st1.push(root->right);
-            
+            if(curr)
+            {
+                st.push(curr);
+                curr = curr->left;
+            }
+            else
+            {
+                previous = st.top()->right;
+                if(previous)
+                {
+                    curr = previous;
+                }
+                else
+                {
+                    previous = st.top();st.pop();
+                    res.push_back(previous->val);
+                    while(!st.empty() && previous==st.top()->right)
+                    {
+                        previous = st.top();st.pop();
+                        res.push_back(previous->val);
+                    }
+                }
+            }
         }
     }
 };
