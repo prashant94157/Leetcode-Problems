@@ -13,12 +13,13 @@ class Solution {
     // }
 public:
     int minFallingPathSum(vector<vector<int>>& matrix) {
-        int n = matrix.size();int res=0;
+        int n = matrix.size();
+        int res=INT_MAX;
         // vector<vector<int>> dp(n, vector<int> (n,0));
         vector<int> prev(n);
         for(int i=0;i<n;i++)
         {
-            int currRes = INT_MAX;
+            // int currRes = INT_MAX;
             vector<int> curr(n);
             for(int j=0;j<n;j++)
             {
@@ -34,10 +35,11 @@ public:
                         c = prev[j+1];
                     curr[j] = matrix[i][j] + min(min(a,b),c) ;
                 }
-                currRes = min(curr[j], currRes);
+                if(i==n-1)
+                res = min(curr[j], res);
             }
             prev = curr;
-            res = currRes;
+            // res = currRes;
         }
         return res;
     }
