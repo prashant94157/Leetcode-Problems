@@ -1,10 +1,5 @@
 class Solution {
 public:
-//     vector<vector<string>> suggestedProducts(vector<string>& products, string searchWord) {
-        
-//     }
-// };
-
    // Using Trie
     /*
         TC: Sorting + Trie Creation + Trie Query
@@ -33,9 +28,8 @@ public:
                 root->suggestions.emplace_back(word);
         }
     }
-    
-    
-    vector<vector<string>> suggestionTrie(vector<string>& products, string searchWord) {
+
+    vector<vector<string>> suggestedProducts(vector<string>& products, string searchWord) {
         vector<vector<string>> result(searchWord.size());
         // sort the words 
         sort(begin(products), end(products));
@@ -57,11 +51,5 @@ public:
             result[i] = root->suggestions;
         }
         return result;
-    }
-// Driver
-
-    vector<vector<string>> suggestedProducts(vector<string>& products, string searchWord) {
-        // return suggesteBinarySearch(products, searchWord);
-        return suggestionTrie(products, searchWord);
     }
 };
