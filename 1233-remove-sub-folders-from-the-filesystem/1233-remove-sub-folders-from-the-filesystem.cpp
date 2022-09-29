@@ -1,19 +1,15 @@
 struct Node{
-    Node *child[27];
+    Node *child[26];
     bool flag = false;
     void put(char ch, Node *node)
     {
         // cout<<"put : "<<ch<<endl;
-        if(ch!='/')
         child[ch-'a'] = node;
-        else child[26] = node;
     }
     Node *get(char ch)
     {
         // cout<<"get : "<<ch<<endl;
-        if(ch!='/')
         return child[ch-'a'];
-        return child[26];
     }
     bool isEnd()
     {
@@ -26,9 +22,7 @@ struct Node{
     bool containKey(char ch)
     {
         // cout<<ch<<"\n";
-        if(ch!='/')
         return child[ch-'a'] != NULL;
-        return child[26] != NULL;
     }
 };
 
@@ -39,55 +33,21 @@ class Trie{
     {
         root = new Node();
     }
-    void insert(string s)
-    {
-        Node *node = root;
-        int n = s.size();
-        for(int i=0;i<n;i++)
-        {
-            char ch = s[i];
-            if(node->isEnd() && ch=='/')
-            {
-                // cout<<i<<" "<<ch<<endl;
-                break;
-            } 
-            if(!node->containKey(ch))
-            {
-                node->put(ch, new Node());
+    bool insert(string word){
+        Node* temp = root;
+        for(int i=0;i<word.size();i++){
+            if(word[i]=='/')
+                continue;
+            if(!temp->containKey(word[i])){
+                temp->put(word[i],new Node());
             }
-            
-            node = node->get(ch);
+            temp = temp->get(word[i]);
+            if(word[i+1]=='/' && temp->isEnd()){
+                return false;
+            }
         }
-        node->setEnd();
-    }
-    void explore(vector<string> &res)
-    {
-        stack<pair<Node*,string>> st;
-        st.push({root,""});
-        while(!st.empty())
-        {
-            Node *node = st.top().first;
-            string s = st.top().second;
-            st.pop();
-            if(node->isEnd())
-            {
-                res.push_back(s);
-                // continue;
-            }
-            for(int i=0;i<26;i++)
-            {
-                if(node->containKey(char(i+'a')))
-                {
-                    // cout<<char(i)<<" "<<s<<endl;
-                    st.push({node->get(char(i+'a')), s+char(i+'a')});
-                }
-            }
-            if(node->containKey('/'))
-            {
-                st.push({node->get('/'), s+'/'});
-            }
-            
-        }
+        temp->setEnd();
+        return true;
     }
 };
 bool cmp(string a,string b)
@@ -97,15 +57,14 @@ bool cmp(string a,string b)
 class Solution {
 public:
     vector<string> removeSubfolders(vector<string>& folder) {
-        sort(folder.begin(),folder.end(),cmp);
-        vector<string> res;
-        Trie trie;
-        for(auto s:folder)
-        {
-            trie.insert(s);
-            // cout<<endl;
+        sort(folder.begin(),folder.end());
+        vector<string> ans;
+        Trie* trie = new Trie();
+        for(int i=0;i<folder.size();i++){
+            if(trie->insert(folder[i])){
+                ans.push_back(folder[i]);
+            }
         }
-        trie.explore(res);
-        return res;
+        return ans;
     }
 };
