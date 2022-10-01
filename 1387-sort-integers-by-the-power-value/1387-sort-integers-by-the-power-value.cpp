@@ -15,17 +15,19 @@ public:
     {
         memset(dp,-1,sizeof(dp));
         dp[1] = 0;
-        for(int i=2;i<=1000;i++)
-        {
-            if(dp[i]==-1)
-                recur(i);
-            cout<<dp[i]<<" ";
-        }
+        // for(int i=2;i<=1000;i++)
+        // {
+        //     if(dp[i]==-1)
+        //         recur(i);
+        //     cout<<dp[i]<<" ";
+        // }
     }
     int getKth(int lo, int hi, int k) {
         vector<pair<int,int>> arr;
         for(int i=lo;i<=hi;i++)
         {
+            if(dp[i]==-1)
+                recur(i);
             arr.push_back({dp[i],i});
         }
         sort(arr.begin(),arr.end());
