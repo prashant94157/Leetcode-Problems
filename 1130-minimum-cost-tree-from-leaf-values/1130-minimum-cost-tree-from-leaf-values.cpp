@@ -1,36 +1,19 @@
 class Solution {
-    public:
-    int mctFromLeafValues(vector<int>& ar) {
-        int n=ar.size();
-        vector <vector <int>> dp(n+1, vector <int>(n+1,-1));
-        return fun(0,n-1,ar,dp);
-    }
-    int fun(int l,int h, vector <int>&ar,vector <vector <int>> &dp){
-        if(l==h)
-            return dp[l][h]=0;
-        if(h-l==1)
-            return dp[l][h]=ar[l]*ar[h];
-        int ans=INT_MAX,a,b,temp;
-        if(dp[l][h]!=-1)
-            return dp[l][h];
-        for(int i=l;i<h;i++){
-            // a=find_max(l,i,ar);
-            // cout<<a<<" ";
-            a = *max_element(ar.begin()+l,ar.begin()+i+1);
-            // cout<<a<<"\n";
-            // b=find_max(i+1,h,ar);
-            b = *max_element(ar.begin()+i+1,ar.begin()+h+1);
-            temp=fun(l,i,ar,dp)+fun(i+1,h,ar,dp);
-            ans=min(ans,(a*b)+temp);
+public:
+    int mctFromLeafValues(vector<int>& A) {
+        int res = 0;
+        vector<int> stack = {INT_MAX};
+        for (int a : A) {
+            while (stack.back() <= a) {
+                int mid = stack.back();
+                stack.pop_back();
+                res += mid * min(stack.back(), a);
+            }
+            stack.push_back(a);
         }
-        return dp[l][h]=ans;
-    }
-    int find_max(int l,int h, vector <int>&ar){
-        int maxi=0;
-        for(int i=l;i<=h;i++){
-            maxi=max(ar[i],maxi);
+        for (int i = 2; i < stack.size(); ++i) {
+            res += stack[i] * stack[i - 1];
         }
-        return maxi;
+        return res;
     }
-    
 };
