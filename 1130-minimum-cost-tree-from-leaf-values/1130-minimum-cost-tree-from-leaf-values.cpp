@@ -1,11 +1,9 @@
 class Solution {
     public:
-    int find_max(int l,int h, vector <int>&ar){
-        int maxi=0;
-        for(int i=l;i<=h;i++){
-            maxi=max(ar[i],maxi);
-        }
-        return maxi;
+    int mctFromLeafValues(vector<int>& ar) {
+        int n=ar.size();
+        vector <vector <int>> dp(n+1, vector <int>(n+1,-1));
+        return fun(0,n-1,ar,dp);
     }
     int fun(int l,int h, vector <int>&ar,vector <vector <int>> &dp){
         if(l==h)
@@ -23,9 +21,12 @@ class Solution {
         }
         return dp[l][h]=ans;
     }
-    int mctFromLeafValues(vector<int>& ar) {
-        int n=ar.size();
-        vector <vector <int>> dp(n+1, vector <int>(n+1,-1));
-        return fun(0,n-1,ar,dp);
+    int find_max(int l,int h, vector <int>&ar){
+        int maxi=0;
+        for(int i=l;i<=h;i++){
+            maxi=max(ar[i],maxi);
+        }
+        return maxi;
     }
+    
 };
