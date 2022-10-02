@@ -14,8 +14,12 @@ class Solution {
         if(dp[l][h]!=-1)
             return dp[l][h];
         for(int i=l;i<h;i++){
-            a=find_max(l,i,ar);
-            b=find_max(i+1,h,ar);
+            // a=find_max(l,i,ar);
+            // cout<<a<<" ";
+            a = *max_element(ar.begin()+l,ar.begin()+i+1);
+            // cout<<a<<"\n";
+            // b=find_max(i+1,h,ar);
+            b = *max_element(ar.begin()+i+1,ar.begin()+h+1);
             temp=fun(l,i,ar,dp)+fun(i+1,h,ar,dp);
             ans=min(ans,(a*b)+temp);
         }
