@@ -14,21 +14,23 @@ class Solution {
 public:
     int change(int amount, vector<int>& coins) {
         int n = coins.size();
-        vector<vector<int>> dp(n,vector<int> (amount+1,-1));
+        vector<int> prev(amount+1,-1);
         // return recur(amount,n-1,coins,dp);
         for(int i=0;i<n;i++)
         {
+            vector<int> curr(amount+1,-1);
             for(int j=0;j<=amount;j++)
             {
                 if(i==0)
-                    dp[i][j] = j%coins[i]==0;
+                    curr[j] = j%coins[i]==0;
                 else {
                     if(j-coins[i] >=0)
-                    dp[i][j] = dp[i][j-coins[i]] + dp[i-1][j];
-                    else dp[i][j] = dp[i-1][j];
+                    curr[j] = curr[j-coins[i]] + prev[j];
+                    else curr[j] = prev[j];
                 }
             }
+            prev = curr;
         }
-        return dp[n-1][amount];
+        return prev[amount];
     }
 };
