@@ -21,7 +21,7 @@ public:
             {
                 arr[i]+=a;
                 i--;
-                if(i<=0)
+                if(i==0)
                 {
                     i=0;
                     state=0;
